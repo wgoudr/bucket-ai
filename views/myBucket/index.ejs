@@ -1,0 +1,39 @@
+<% layout('./layouts/boilerplate') %>
+
+<div class="container" id="index-div">
+  <div class="d-flex" style="justify-content: center; align-items: center">
+    <h1>Here is your Bucket List</h1>
+  </div>
+
+  <div id="entry-text">
+    <div class="d-flex justify-content-center mb-5">
+      <button id="new-entry-btn">
+        <a href="/newEntry"><h3;>Add New Entry</h3></a>
+      </button>
+    </div>
+
+    <div>
+      <% for (const entry of entries){ %>
+      <div class="container" id="each-entry">
+        <div class="row">
+          <div class="col-10">
+            <h2><%= entry.name %></h2>
+          </div>
+          <div class="col-1 d-flex justify-content-center align-items-center">
+            <a href="/<%= entry._id %>/edit"><h6>Edit&nbsp</h6></a>
+          </div>
+          <div class="col-1 d-flex justify-content-center align-items-center">
+            <form
+              action="/<%= entry._id %>/delete?_method=delete"
+              method="post"
+            >
+              <button>Delete</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-10"><%= entry.description %></div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div>

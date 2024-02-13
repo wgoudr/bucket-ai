@@ -1,0 +1,34 @@
+<% layout('/layouts/boilerplate') %>
+
+<div
+  class="container flex-column d-flex justify-content-center align-items-center"
+>
+  <div><h1>Login</h1></div>
+  <form action="/login" method="post" class="needs-validation" novalidate>
+    <div>
+      <label class="form-label" for="username">username: </label>
+      <input
+        class="form-control"
+        type="text"
+        id="username"
+        name="username"
+        required
+      />
+      <div class="valid-feedback">Looks Good!</div>
+    </div>
+
+    <div>
+      <label class="form-label" for="password">password: </label>
+      <input
+        class="form-control"
+        type="password"
+        id="password"
+        name="password"
+        required
+      />
+      <div class="valid-feedback">Looks Good!</div>
+    </div>
+
+    <button class="mt-2 btn btn-success">Login</button>
+  </form>
+</div>

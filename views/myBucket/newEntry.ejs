@@ -1,0 +1,136 @@
+<% layout('./layouts/boilerplate') %>
+<div
+  class="d-flex"
+  style="justify-content: space-evenly; margin: 0em 5em 0em 5em"
+>
+  <div>
+    <H1 class="mb-0">Create an Entry</H1>
+    <h1>or let AI do it for you!</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="d-flex col-md-6 justify-content-center" id="entry-text">
+      <div style="width: 75%">
+        <form action="/index" class="needs-validation" method="post" novalidate>
+          <div>
+            <label class="form-label" for="name">Name: </label>
+            <input
+              class="form-control"
+              type="text"
+              id="name"
+              name="entry[name]"
+              required
+            />
+            <div class="invalid-feedback">Please choose a Name.</div>
+          </div>
+
+          <div>
+            <label for="description">Description: </label>
+            <input
+              class="form-control justify-content-top"
+              type="text"
+              id="description"
+              name="entry[description]"
+              style="overflow: auto"
+            />
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+          <button class="mt-2">Add Entry</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="d-flex col-md-6 justify-content-center" id="ai-div">
+      <div>
+        <H2>Pick a category and the AI will give you some ideas:</H2>
+
+        <div>
+          <form action="/newEntry" id="ai-form">
+            <label for="message">Ask AI:</label>
+            <input
+              class="form-control"
+              type="text"
+              name="message"
+              id="message"
+            />
+            <button class="mt-2" type="submit">Send</button>
+          </form>
+        </div>
+
+        <div class="border rounded" id="chat-log"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const chatLog = document.getElementById("chat-log");
+  const message = document.getElementById("message");
+  const form = document.getElementById("ai-form");
+  let count = 0;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const messageText = message.value;
+    message.value = "";
+    const messageElement = document.createElement("div");
+    //messageElement.classList.add("message");
+    //messageElement.classList.add("message--sent");
+    messageElement.innerHTML = `<div class"message__text">Category: ${messageText}</div>`;
+    chatLog.appendChild(messageElement);
+    chatLog.scrollTop = chatLog.scrollHeight;
+
+    fetch("http://localhost:3000/newEntry", {
+      method: "post",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: messageText,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        data.finalText.forEach((entry) => {
+          const messageElement = document.createElement("div");
+          messageElement.classList.add("message");
+          messageElement.classList.add("message--sent");
+          messageElement.innerHTML = `
+          <div style="margin: 1em 1em 1em 1em;">
+          <div class="text-source" data-entry-index="${count}"><h3><b>${entry.name}</b><h3></div>
+          <div class="text-source2" data-entry-index="${count}">${entry.description}</div>
+          <button data-index="${count}">Use This</button>
+          </div>`;
+          chatLog.appendChild(messageElement);
+
+          //chatLog.scrollTop = chatLog.scrollHeight;
+          count++;
+        });
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  });
+
+  // selecting the TEXT YOU WANT TO add to entry submition
+  document.addEventListener("click", (e) => {
+    if (e.target.tagName === "BUTTON" && e.target.hasAttribute("data-index")) {
+      let index = e.target.getAttribute("data-index");
+      let text = document.querySelector(
+        `div.text-source[data-entry-index="${index}"]`
+      ).textContent;
+      let text2 = document.querySelector(
+        `div.text-source2[data-entry-index="${index}"]`
+      ).textContent;
+
+      document.getElementById("name").value = text;
+      document.getElementById("description").value = text2;
+    }
+  });
+
+  //    function to validate forms
+</script>

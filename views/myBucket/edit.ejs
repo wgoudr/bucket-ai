@@ -1,0 +1,34 @@
+<% layout('./layouts/boilerplate') %>
+
+<h1>Edit this entry</h1>
+
+<form
+  action="/myList/<%= entry._id %>?_method=put"
+  method="post"
+  class="needs-validation"
+  novalidate
+>
+  <div>
+    <label for="name">Name</label>
+    <input
+      class="form-control"
+      type="text"
+      id="name"
+      name="entry[name]"
+      value="<%= entry.name %>"
+      required
+    />
+    <div class="invalid-feedback">Please choose a Name.</div>
+  </div>
+  <div>
+    <label for="description">Description</label>
+    <input
+      class="form-control"
+      type="text"
+      id="description"
+      name="entry[description]"
+      value="<%= entry.description %>"
+    />
+  </div>
+  <button class="mt-2">Save</button>
+</form>
