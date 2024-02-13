@@ -240,7 +240,7 @@ app.use((err, req, res, next) => {
 })
 
 // Port
-const port = process.env.port || 3000
-app.listen(port, () => {
-    console.log(`ON PORT ${port}`);
+const port = process.env.PORT || 3000
+app.listen(PORT, () => {
+    console.log(`ON PORT ${PORT}`);
 })
