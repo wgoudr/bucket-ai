@@ -31,8 +31,8 @@ const MongoStore = require('connect-mongo');    //  MongoDB session store for Co
 const { url } = require('inspector');
 
 
-// connecting to db and checking if successful connection
-mongoose.connect('mongodb://localhost:27017/Entry'  , {
+// connecting to atlas db (or locally) and checking if successful connection
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true})
 
@@ -173,7 +173,6 @@ app.post('/register', wrapAsync(async (req, res, next) => {
         req.flash('error', e.message);
         res.redirect('register');
     }
-
 }))
 
 app.get('/login', (req, res) => {
