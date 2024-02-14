@@ -83,7 +83,8 @@
     chatLog.appendChild(messageElement);
     chatLog.scrollTop = chatLog.scrollHeight;
 
-    fetch("http://localhost:3000/newEntry", {
+    // deployed: https://bucket-ai-a9962aacfaf1.herokuapp.com/newEntry // local: http://localhost:3000/newEntry
+    fetch("https://bucket-ai-a9962aacfaf1.herokuapp.com/newEntry", {
       method: "post",
       mode: "cors",
       headers: {

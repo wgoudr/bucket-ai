@@ -10,6 +10,7 @@ const styleSrcUrls = [
     "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 ];
 const connectSrcUrls = [
+    "https://bucket-ai-a9962aacfaf1.herokuapp.com"
 ];
 const fontSrcUrls = [  
     "https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap",
